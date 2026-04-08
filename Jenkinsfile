@@ -1,16 +1,20 @@
 pipeline {
     agent any
 
+    environment {
+        strDockerImage="yealims/cicd-test:0.1"
+    }
     stages {
         stage('Github Pull') {
             steps {
                 git branch: 'main', url: 'https://github.com/yealims/cicd-test.git'
             }
         }
-        stage('Git Clone End') {
+        stage('Docker image build') {
             steps {
-                sh 'touch cicd_test.txt'
-                sh 'echo "git clone end" > cicd_test.txt'
+                script {
+                    oDockImage = docker.build(strDockerImage, "-f Dockerfile .")
+                }
             }
         }
         stage('Deploy Server') {
