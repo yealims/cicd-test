@@ -13,4 +13,5 @@ pipeline {
 	        sh 'echo "git clone end" > cicd_test.txt'
 	    }
 	  }
+	}
 }
